@@ -26,3 +26,5 @@ node ./index.js
 > Make sure node has write rights to the directory
 
 If all has been setup successfully script should export prisma db and upload to S3.
+
+> Restore coming soon
