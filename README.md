@@ -2,14 +2,10 @@
 
 ## Instructions
 
-### Instructions without explanation
-
 - Download repo locally
 - Create an AWS account
 - Create AWS credentials (ACCESS ID/SECRET)
 - Create an S3 Bucket
-
-### Create .env file
 
 Create a .env file in repo root with the following:
 
