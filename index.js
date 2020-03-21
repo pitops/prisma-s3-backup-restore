@@ -7,7 +7,7 @@ const AWS = require('aws-sdk')
 
 const spinner = ora()
 
-// Enter copied or downloaded access ID and secret key here
+// AWS credentials
 const ID = process.env.AWS_ACCESS_ID
 const SECRET = process.env.AWS_ACCESS_SECRET
 
@@ -31,23 +31,30 @@ const uploadFile = async fileName => {
   }
 
   // Uploading files to the bucket
-  try {
-    return s3.upload(params).promise()
-  } catch (err) {
-    throw err
-  }
+  return s3.upload(params).promise()
 }
 
 async function main () {
   const fileName = `${new Date().toISOString()}.zip`
 
   spinner.start('Exporting database')
-  await execa('prisma', ['export', '--env-file', '.env', '--path', fileName])
+  try {
+    await execa('npx', ['prisma', 'export', '--path', fileName])
+  } catch (err) {
+    console.log(err)
+    spinner.fail()
+  }
+
   spinner.succeed('Exported database')
 
   spinner.start('Uploading to S3 bucket')
-  const file = await uploadFile(fileName)
-  spinner.succeed(`Database uploaded successfully. ${file.Location}`)
+  try {
+    const file = await uploadFile(fileName)
+    spinner.succeed(`Database uploaded successfully. ${file.Location}`)
+  } catch (err) {
+    console.log(err)
+    spinner.fail()
+  }
 
   spinner.start('Cleaning up')
   await fse.removeSync(fileName)
