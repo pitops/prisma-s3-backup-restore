@@ -39,7 +39,7 @@ async function main () {
 
   spinner.start('Exporting database')
   try {
-    await execa('npx', ['prisma', 'export', '--path', fileName])
+    await execa('npx', ['prisma1', 'export', '--path', fileName])
   } catch (err) {
     console.log(err)
     spinner.fail()

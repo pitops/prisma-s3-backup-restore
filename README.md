@@ -1,5 +1,7 @@
 # Prisma-S3-Backup-Restore
 
+> NOTE: Only works with Prisma v1
+
 ## Instructions
 
 - Download repo locally
